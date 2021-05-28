@@ -75,39 +75,6 @@
             this.buildTree(this.levelSelector.floorData);
         }
 
-        selectTreeNode(id, focus) {
-            const tree = $(this.treeContainer).jstree(true);
-            const node = tree.get_node(id);
-            const parent = node.parent;
-            if (tree.is_checked(parent)) {
-                tree.uncheck_node(parent);
-            }
-
-            const children = tree.get_bottom_checked(true);
-            for (let i = 0; i < children.length; i++) {
-                const child = children[i];
-                if (child.id == id)
-                    continue;
-
-                tree.uncheck_node(child);
-            }
-
-            tree.select_node(node);
-            if (focus) {
-                tree.get_node(parent, true).children('.jstree-anchor').focus();
-            }
-        }
-
-        unselectTreeNode(id) {
-            const tree = $(this.treeContainer).jstree(true);
-            if (tree.is_checked([id]))
-                tree.uncheck_node([id]);
-        }
-
-        clearTreeNodeSelection() {
-            $(this.treeContainer).jstree(true).uncheck_all();
-        }
-
         findLevelByName(name) {
             const levelData = this.levelSelector.floorData;
             return levelData.find(level => level.name.includes(name));
@@ -117,34 +84,6 @@
             const levelData = this.dataProvider.locations;
             return levelData.find(level => level.name.includes(name));
         }
-
-        // setLevelFilterByName(name, focus) {
-        //     this.viewer.setCutPlanes();
-
-        //     const level = this.findLevelByName(name);
-        //     if (level) {
-        //         this.isFilterApplied = true;
-        //         this.levelSelector.selectFloor(level.index, false);
-        //         this.prevFilter = {
-        //             level: name,
-        //             space: null
-        //         };
-
-        //         if (this.uiCreated) {
-        //             const levelLocation = this.findLevelLocationByName(name);
-        //             this.selectTreeNode(levelLocation.id, focus);
-        //         }
-        //     } else {
-        //         this.isFilterApplied = false;
-        //         this.levelSelector.selectFloor();
-
-        //         if (this.uiCreated) {
-        //             this.clearTreeNodeSelection();
-        //         }
-        //     }
-
-        //     return true;
-        // }
 
         hoverLevelByName(name) {
             const level = this.findLevelByName(name);
@@ -161,16 +100,6 @@
             this.levelSelector.rollOverFloor();
             this.viewer.impl.invalidate(false, true, true);
         }
-
-        getPropertiesAsync(dbId, model) {
-            return new Promise((resolve, reject) => {
-                model.getProperties2(
-                    dbId,
-                    (result) => resolve(result),
-                    (error) => reject(error)
-                );
-            });
-        };
 
         buildTree(data) {
             const nodes = [];
