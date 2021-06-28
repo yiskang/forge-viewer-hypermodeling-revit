@@ -183,15 +183,21 @@
                     }
 
                     if (data.action === 'select_node') {
+                        const sheetLoadedHandler = (result) => {
+                            if (!result.model.isPdf()) return;
+
+                            result.model.changePaperVisibility(false);
+                        };
+
                         if (data.node.type === 'sheets') {
                             const sheetIdx = data.node.original.id;
                             const levelIdx = data.instance.get_node(data.node.parent).original.id;
-                            await this.hyperModelingTool.loadSheetFromLevel(levelIdx, sheetIdx);
+                            await this.hyperModelingTool.loadSheetFromLevel(levelIdx, sheetIdx, sheetLoadedHandler);
                         } else {
                             const levelIdx = data.node.original.id;
                             const sheets = this.hyperModelingTool.getAvailableSheetsForLevel(levelIdx);
                             sheets.forEach(async (sheet, sheetIdx) => {
-                                await this.hyperModelingTool.loadSheetFromLevel(levelIdx, sheetIdx);
+                                await this.hyperModelingTool.loadSheetFromLevel(levelIdx, sheetIdx, sheetLoadedHandler);
                             });
                         }
                     } else {
