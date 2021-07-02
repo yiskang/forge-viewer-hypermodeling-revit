@@ -110,12 +110,12 @@
                 if (!sheets || sheets.length <= 0) continue;
 
                 const node = {
-                    id: data[i].index,
+                    dbId: data[i].index,
                     type: 'levels',
                     text: data[i].name,
                     children: sheets.map((child, idx) => {
                         return {
-                            id: idx,
+                            dbId: idx,
                             type: 'sheets',
                             text: child.node.name()
                         };
@@ -190,11 +190,11 @@
                         };
 
                         if (data.node.type === 'sheets') {
-                            const sheetIdx = data.node.original.id;
-                            const levelIdx = data.instance.get_node(data.node.parent).original.id;
+                            const sheetIdx = data.node.original.dbId;
+                            const levelIdx = data.instance.get_node(data.node.parent).original.dbId;
                             await this.hyperModelingTool.loadSheetFromLevel(levelIdx, sheetIdx, sheetLoadedHandler);
                         } else {
-                            const levelIdx = data.node.original.id;
+                            const levelIdx = data.node.original.dbId;
                             const sheets = this.hyperModelingTool.getAvailableSheetsForLevel(levelIdx);
                             sheets.forEach(async (sheet, sheetIdx) => {
                                 await this.hyperModelingTool.loadSheetFromLevel(levelIdx, sheetIdx, sheetLoadedHandler);
@@ -202,13 +202,13 @@
                         }
                     } else {
                         if (data.node.type === 'sheets') {
-                            const sheetIdx = data.node.original.id;
-                            const levelIdx = data.instance.get_node(data.node.parent).original.id;
+                            const sheetIdx = data.node.original.dbId;
+                            const levelIdx = data.instance.get_node(data.node.parent).original.dbId;
 
                             const loadedSheet = this.hyperModelingTool.findLoadedSheetFromLevelAndSheetIndex(levelIdx, sheetIdx);
                             this.hyperModelingTool.unloadSheet(loadedSheet);
                         } else {
-                            const levelIdx = data.node.original.id;
+                            const levelIdx = data.node.original.dbId;
                             this.hyperModelingTool.unloadSheetsFromLevel(levelIdx);
                         }
                     }
