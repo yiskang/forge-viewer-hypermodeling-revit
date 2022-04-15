@@ -274,6 +274,10 @@
 
             await viewer.model.getDocumentNode().getDocument().downloadAecModelData();
 
+            // Workaround for misaligned issue
+            // let aecData = viewer.model.getDocumentNode().getAecModelData();
+            // aecData.viewports = aecData.viewports.map( vp => { vp.modelToSheetTransform = null; return vp } )
+
             // Pre-load level extension 
             await viewer.loadExtension('Autodesk.AEC.LevelsExtension'/*, { doNotCreateUI: true }*/);
             await viewer.loadExtension('Autodesk.AEC.Hypermodeling', { hidePaper: true });
