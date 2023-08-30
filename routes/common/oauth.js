@@ -16,7 +16,7 @@
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////
 
-const { AuthClientTwoLegged } = require('forge-apis');
+const { AuthClientTwoLeggedV2 } = require('forge-apis');
 
 const config = require('../../config');
 
@@ -27,7 +27,7 @@ const config = require('../../config');
  */
 function getClient(scopes) {
     const { client_id, client_secret } = config.credentials;
-    return new AuthClientTwoLegged(client_id, client_secret, scopes || config.scopes.internal);
+    return new AuthClientTwoLeggedV2(client_id, client_secret, scopes || config.scopes.internal);
 }
 
 let cache = {};
