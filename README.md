@@ -26,6 +26,14 @@ This sample is a revision of the [Learn Forge](http://learnforge.autodesk.io) no
     - Sheets with the [Crop View checkbox enabled](https://knowledge.autodesk.com/support/revit-products/learn-explore/caas/CloudHelp/cloudhelp/2020/ENU/Revit-DocumentPresent/files/GUID-8BEBCEF0-CE2C-4635-8C7C-9D03503C0B79-htm.html) in Revit.
     - Views without view breaks. Views containing view breaks or view splits are not supported currently.
     - The view placed in the sheets should not contain any of [Plan Regions](https://help.autodesk.com/view/RVT/2024/ENU/?guid=GUID-594B7B97-0D59-4B03-9544-E403BD03BE48).
+      ```csharp
+      var planRegion = new FilteredElementCollector(document).OfCategory(BuiltInCategory.OST_PlanRegion).ToList();
+
+      planRegion.Any(r => r.OwnerViewId.Value() == planView.Id.Value());
+
+      //Before 2024
+      //planRegion.Any(r => r.OwnerViewId.IntegerValue == planView.Id.IntegerValue);
+      ```
 
 ## Thumbnail
 
